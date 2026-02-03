@@ -385,20 +385,20 @@ const FooterSchedule: React.FC = () => {
     ];
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-40 p-4 pointer-events-none flex justify-center">
-            <div className="bg-black/80 backdrop-blur-md border border-white/10 rounded-full px-4 py-2.5 flex items-center gap-4 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+        <div className="fixed bottom-0 left-0 right-0 z-40 p-6 pointer-events-none flex justify-center">
+            <div className="bg-black/95 backdrop-blur-xl border border-white/10 rounded-full px-10 py-5 flex items-center gap-10 shadow-[0_0_30px_rgba(0,0,0,0.7)]">
                 {schedule.map((item, index) => (
                     <div key={index} className="flex flex-col items-center">
-                        <span className={`text-[9px] font-bold tracking-widest mb-0.5 ${item.active ? 'text-primary' : 'text-gray-500'}`}>
+                        <span className={`text-[14px] font-bold tracking-widest mb-1 ${item.active ? 'text-primary' : 'text-gray-500'}`}>
                             {item.label}
                         </span>
-                        <span className={`text-[8px] font-medium uppercase tracking-wide ${item.active ? 'text-white' : 'text-gray-600'}`}>
+                        <span className={`text-[12px] font-medium uppercase tracking-wide ${item.active ? 'text-white' : 'text-gray-400'}`}>
                             {item.date} • {item.time}
                         </span>
 
                         {/* Vertical Separator (except last) */}
                         {index < schedule.length - 1 && (
-                            <div className="absolute right-[-8px] top-1/2 -translate-y-1/2 w-[1px] h-3 bg-white/5 hidden" />
+                            <div className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-[1px] h-4 bg-white/10 block" />
                         )}
                     </div>
                 ))}
