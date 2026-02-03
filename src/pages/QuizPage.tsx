@@ -411,6 +411,7 @@ return (
     <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2">
         <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl max-w-lg mx-auto">
             <div className="flex justify-between items-center gap-2">
+                {/* Playlist Items - No interactions, purely visual */}
                 {/* Item 1 */}
                 <div
                     className="flex flex-col items-center justify-center flex-1 p-2 rounded-xl bg-white/10 border border-primary/30 shadow-[0_0_10px_rgba(247,147,30,0.1)] transition-all"
