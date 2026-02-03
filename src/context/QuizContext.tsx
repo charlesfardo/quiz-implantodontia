@@ -48,7 +48,12 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const initQuiz = (id: QuizId) => {
         setQuizId(id);
-        setStep('intro');
+        // Se já tiver usuário, vai direto pro menu, senão intro
+        if (user.name && user.whatsapp) {
+            setStep('menu');
+        } else {
+            setStep('intro');
+        }
         setCurrentQuestionIndex(0);
         setAnswers({});
     };
