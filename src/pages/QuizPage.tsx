@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuiz } from '../context/QuizContext';
 import type { QuizId } from '../data/quizzes';
 import { Button, Input, Card, Layout, ProgressBar } from '../components/UI';
-import { CheckCircle, AlertTriangle, Share2, Lock } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Share2, Lock, PlayCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const QuizPage: React.FC = () => {
@@ -33,30 +33,34 @@ export const QuizPage: React.FC = () => {
 
     return (
         <Layout>
-            <div className="text-center mb-8">
-                <h1 className="text-primary text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-3 animate-pulse">
-                    O Novo Plano da Implantodontia
-                </h1>
-                <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 text-3xl md:text-4xl font-extrabold leading-tight drop-shadow-lg p-2">
-                    {quiz.title}
-                </h2>
+            <div className="w-full pb-32">
+                <div className="text-center mb-8">
+                    <h1 className="text-primary text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-3 animate-pulse">
+                        O Novo Plano da Implantodontia
+                    </h1>
+                    <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 text-3xl md:text-4xl font-extrabold leading-tight drop-shadow-lg p-2">
+                        {quiz.title}
+                    </h2>
+                </div>
+
+                <Card>
+                    <AnimatePresence mode="wait">
+                        {step === 'intro' && <IntroStep key="intro" />}
+                        {step === 'menu' && <MenuStep key="menu" />}
+                        {step === 'question' && <QuestionStep key="question" />}
+                        {step === 'result' && <ResultStep key="result" />}
+                    </AnimatePresence>
+                </Card>
+
+                <div className="text-center mt-8 space-y-2">
+                    <p className="text-xs text-gray-500 font-medium">
+                        🔒 Seus dados estão 100% seguros
+                    </p>
+                    <div className="h-1 w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto rounded-full" />
+                </div>
             </div>
 
-            <Card>
-                <AnimatePresence mode="wait">
-                    {step === 'intro' && <IntroStep key="intro" />}
-                    {step === 'menu' && <MenuStep key="menu" />}
-                    {step === 'question' && <QuestionStep key="question" />}
-                    {step === 'result' && <ResultStep key="result" />}
-                </AnimatePresence>
-            </Card>
-
-            <div className="text-center mt-8 space-y-2">
-                <p className="text-xs text-gray-500 font-medium">
-                    🔒 Seus dados estão 100% seguros
-                </p>
-                <div className="h-1 w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto rounded-full" />
-            </div>
+            <FooterPlaylist />
         </Layout>
     );
 };
@@ -339,6 +343,18 @@ const ResultStep: React.FC = () => {
                     </span>
                 </Button>
 
+                {/* Secondary Button: Replay Aula 01 */}
+                <Button
+                    variant="outline"
+                    fullWidth
+                    onClick={() => window.open('#', '_blank')}
+                >
+                    <span className="flex items-center justify-center gap-3">
+                        <PlayCircle size={20} />
+                        REPLAY AULA 1
+                    </span>
+                </Button>
+
                 {/* Secondary Button: Official Group */}
                 <Button
                     variant="whatsapp"
@@ -356,5 +372,64 @@ const ResultStep: React.FC = () => {
                 </p>
             </div>
         </motion.div>
+    );
+};
+
+const FooterPlaylist: React.FC = () => {
+    // Playlist navigation items
+    const items = [
+        {
+            id: 1,
+            title: 'AULA 01',
+            status: 'available',
+            date: 'LIBERADA',
+            icon: <PlayCircle size={18} />,
+            link: '#' // TODO: Update link
+        },
+        {
+            id: 2,
+            title: 'AULA 02',
+            status: 'locked',
+            date: '04/02',
+            icon: <Lock size={16} />,
+            link: null
+        },
+        {
+            id: 3,
+            title: 'AULA 03',
+            status: 'locked',
+            date: '05/02',
+            icon: <Lock size={16} />,
+            link: null
+        },
+    ];
+
+    return (
+        <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2">
+            <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl max-w-lg mx-auto">
+                <div className="flex justify-between items-center gap-2">
+                    {items.map((item) => (
+                        <div
+                            key={item.id}
+                            className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${item.status === 'available'
+                                ? 'bg-white/10 border border-primary/30 shadow-[0_0_10px_rgba(247,147,30,0.1)] cursor-pointer hover:bg-white/20'
+                                : 'opacity-50 cursor-not-allowed grayscale'
+                                }`}
+                            onClick={() => item.status === 'available' && window.open(item.link || '#', '_blank')}
+                        >
+                            <div className={`mb-1.5 ${item.status === 'available' ? 'text-primary animate-pulse' : 'text-gray-500'}`}>
+                                {item.icon}
+                            </div>
+                            <span className={`text-[10px] font-bold tracking-wider ${item.status === 'available' ? 'text-white' : 'text-gray-500'}`}>
+                                {item.title}
+                            </span>
+                            <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
+                                {item.date}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
     );
 };
