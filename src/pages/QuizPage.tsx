@@ -294,6 +294,17 @@ const ResultStep: React.FC = () => {
 
     const nextClass = getNextClassInfo();
 
+    // Logic for replay link
+    const getReplayInfo = () => {
+        if (!quiz) return null;
+        if (quiz.id === 'quiz-1') return { title: 'REPLAY AULA 1', link: 'https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9' };
+        if (quiz.id === 'quiz-2') return { title: 'REPLAY AULA 2', link: '#' }; // Link pendente
+        if (quiz.id === 'quiz-3') return { title: 'REPLAY AULA 3', link: '#' }; // Link pendente
+        return null;
+    };
+
+    const replayInfo = getReplayInfo();
+
     return (
         <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -347,17 +358,19 @@ const ResultStep: React.FC = () => {
                     </span>
                 </Button>
 
-                {/* Secondary Button: Replay Aula 01 */}
-                <Button
-                    variant="outline"
-                    fullWidth
-                    onClick={() => window.open('https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9', '_blank')}
-                >
-                    <span className="flex items-center justify-center gap-3">
-                        <PlayCircle size={20} />
-                        REPLAY AULA 1
-                    </span>
-                </Button>
+                {/* Secondary Button: Replay (Dynamic) */}
+                {replayInfo && (
+                    <Button
+                        variant="outline"
+                        fullWidth
+                        onClick={() => window.open(replayInfo.link, '_blank')}
+                    >
+                        <span className="flex items-center justify-center gap-3">
+                            <PlayCircle size={20} />
+                            {replayInfo.title}
+                        </span>
+                    </Button>
+                )}
 
                 {/* Secondary Button: Official Group */}
                 <Button
