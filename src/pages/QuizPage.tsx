@@ -114,105 +114,114 @@ const IntroStep: React.FC = () => {
     );
 };
 
-exit = {{ opacity: 0, x: -20 }}
-className = "space-y-6"
-    >
-    <div className="text-center mb-6">
-        <h3 className="text-white text-lg font-bold">Diagnóstico Liberado</h3>
-        <p className="text-gray-400 text-sm">Complete o Passo 1 para desbloquear os próximos.</p>
-    </div>
+const MenuStep: React.FC = () => {
+    const { nextQuestion, quiz } = useQuiz();
+    const [lockedMessage, setLockedMessage] = React.useState<string | null>(null);
+    const navigate = useNavigate();
 
-{/* Quiz 1 */ }
-<motion.div
-    whileHover={{ scale: 1.02 }}
-    className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-1' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
-    onClick={() => quiz?.id === 'quiz-1' ? nextQuestion() : navigate('/quiz/aula-1')}
->
-    <div className="flex justify-between items-center mb-2">
-        <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-1' ? 'text-primary' : 'text-gray-400'}`}>Passo 01 • Disponível</span>
-        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
-    </div>
-    <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Diagnóstico de Dependência</h4>
-    <p className="text-gray-400 text-xs mb-4">Descubra o que te impede de ver outras opções além do enxerto.</p>
-    <Button fullWidth variant="primary" className="py-3 text-sm">
-        {quiz?.id === 'quiz-1' ? 'INICIAR AGORA' : 'ACESSAR'}
-    </Button>
-</motion.div>
-
-{/* Quiz 2 */ }
-<motion.div
-    whileHover={{ scale: 1.02 }}
-    className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-2' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
-    onClick={() => quiz?.id === 'quiz-2' ? nextQuestion() : navigate('/quiz/aula-2')}
->
-    <div className="flex justify-between items-center mb-2">
-        <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-2' ? 'text-primary' : 'text-gray-400'}`}>Passo 02 • Disponível (Teste)</span>
-        <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
-    </div>
-    <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Mapa dos 3 Pilares</h4>
-    <p className="text-gray-400 text-xs mb-4">Avalie a estrutura óssea e gengival com precisão.</p>
-    <Button fullWidth variant="primary" className="py-3 text-sm">
-        {quiz?.id === 'quiz-2' ? 'INICIAR AGORA' : 'ACESSAR'}
-    </Button>
-</motion.div>
-
-{/* Quiz 3 */ }
-<motion.div
-    whileHover={{ scale: 1.02 }}
-    className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-3' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
-    onClick={() => quiz?.id === 'quiz-3' ? nextQuestion() : navigate('/quiz/aula-3')}
->
-    <div className="flex justify-between items-center mb-2">
-        <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-3' ? 'text-primary' : 'text-gray-400'}`}>Passo 03 • Disponível (Teste)</span>
-        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
-    </div>
-    <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Termômetro dos 5 Erros</h4>
-    <p className="text-gray-400 text-xs mb-4">Identifique falhas críticas no planejamento.</p>
-    <Button fullWidth variant="primary" className="py-3 text-sm">
-        {quiz?.id === 'quiz-3' ? 'INICIAR AGORA' : 'ACESSAR'}
-    </Button>
-</motion.div>
-
-{/* Locked Modal */ }
-<AnimatePresence>
-    {lockedMessage && (
+    return (
         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-            onClick={() => setLockedMessage(null)}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
         >
-            <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-gray-900 border border-white/10 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl relative"
-                onClick={e => e.stopPropagation()}
-            >
-                <button
-                    onClick={() => setLockedMessage(null)}
-                    className="absolute top-2 right-2 text-gray-500 hover:text-white p-2"
-                >
-                    ✕
-                </button>
+            <div className="text-center mb-6">
+                <h3 className="text-white text-lg font-bold">Diagnóstico Liberado</h3>
+                <p className="text-gray-400 text-sm">Complete o Passo 1 para desbloquear os próximos.</p>
+            </div>
 
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
-                    <Lock size={24} />
+            {/* Quiz 1 */}
+            <motion.div
+                whileHover={{ scale: 1.02 }}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-1' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-1' ? nextQuestion() : navigate('/quiz/aula-1')}
+            >
+                <div className="flex justify-between items-center mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-1' ? 'text-primary' : 'text-gray-400'}`}>Passo 01 • Disponível</span>
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
                 </div>
-                <h3 className="text-white font-bold text-lg mb-2">Acesso Restrito</h3>
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed">
-                    {lockedMessage}
-                </p>
-                <Button fullWidth onClick={() => setLockedMessage(null)}>
-                    Entendi
+                <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Diagnóstico de Dependência</h4>
+                <p className="text-gray-400 text-xs mb-4">Descubra o que te impede de ver outras opções além do enxerto.</p>
+                <Button fullWidth variant="primary" className="py-3 text-sm">
+                    {quiz?.id === 'quiz-1' ? 'INICIAR AGORA' : 'ACESSAR'}
                 </Button>
             </motion.div>
-        </motion.div>
-    )}
-</AnimatePresence>
-    </motion.div >
-);
+
+            {/* Quiz 2 */}
+            <motion.div
+                whileHover={{ scale: 1.02 }}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-2' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-2' ? nextQuestion() : navigate('/quiz/aula-2')}
+            >
+                <div className="flex justify-between items-center mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-2' ? 'text-primary' : 'text-gray-400'}`}>Passo 02 • Disponível (Teste)</span>
+                    <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
+                </div>
+                <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Mapa dos 3 Pilares</h4>
+                <p className="text-gray-400 text-xs mb-4">Avalie a estrutura óssea e gengival com precisão.</p>
+                <Button fullWidth variant="primary" className="py-3 text-sm">
+                    {quiz?.id === 'quiz-2' ? 'INICIAR AGORA' : 'ACESSAR'}
+                </Button>
+            </motion.div>
+
+            {/* Quiz 3 */}
+            <motion.div
+                whileHover={{ scale: 1.02 }}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-3' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-3' ? nextQuestion() : navigate('/quiz/aula-3')}
+            >
+                <div className="flex justify-between items-center mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-3' ? 'text-primary' : 'text-gray-400'}`}>Passo 03 • Disponível (Teste)</span>
+                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                </div>
+                <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Termômetro dos 5 Erros</h4>
+                <p className="text-gray-400 text-xs mb-4">Identifique falhas críticas no planejamento.</p>
+                <Button fullWidth variant="primary" className="py-3 text-sm">
+                    {quiz?.id === 'quiz-3' ? 'INICIAR AGORA' : 'ACESSAR'}
+                </Button>
+            </motion.div>
+
+            {/* Locked Modal */}
+            <AnimatePresence>
+                {lockedMessage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                        onClick={() => setLockedMessage(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-gray-900 border border-white/10 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl relative"
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setLockedMessage(null)}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-white p-2"
+                            >
+                                ✕
+                            </button>
+
+                            <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
+                                <Lock size={24} />
+                            </div>
+                            <h3 className="text-white font-bold text-lg mb-2">Acesso Restrito</h3>
+                            <p className="text-gray-300 text-sm mb-6 leading-relaxed">
+                                {lockedMessage}
+                            </p>
+                            <Button fullWidth onClick={() => setLockedMessage(null)}>
+                                Entendi
+                            </Button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div >
+    );
 };
 
 const QuestionStep: React.FC = () => {
