@@ -34,7 +34,18 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [quizId, setQuizId] = useState<QuizId | null>(null);
     const [step, setStep] = useState<QuizStep>('intro');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [user, setUser] = useState<UserData>({ name: '', whatsapp: '' });
+
+    // Initialize user from localStorage to persist session
+    const [user, setUser] = useState<UserData>(() => {
+        const saved = localStorage.getItem('quiz_user');
+        return saved ? JSON.parse(saved) : { name: '', whatsapp: '' };
+    });
+
+    // Persist user changes
+    useEffect(() => {
+        localStorage.setItem('quiz_user', JSON.stringify(user));
+    }, [user]);
+
     const [answers, setAnswers] = useState<Record<number, number>>({});
 
     const quiz = quizId ? quizzes[quizId] : null;
