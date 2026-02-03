@@ -423,7 +423,7 @@ return (
                         AULA 01
                     </span>
                     <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
-                        LIBERADA
+                        ONLINE AGORA
                     </span>
                 </div>
 
