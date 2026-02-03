@@ -347,7 +347,7 @@ const ResultStep: React.FC = () => {
                 <Button
                     variant="outline"
                     fullWidth
-                    onClick={() => window.open('#', '_blank')}
+                    onClick={() => window.open('https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9', '_blank')}
                 >
                     <span className="flex items-center justify-center gap-3">
                         <PlayCircle size={20} />
@@ -384,7 +384,7 @@ const FooterPlaylist: React.FC = () => {
             status: 'available',
             date: 'LIBERADA',
             icon: <PlayCircle size={18} />,
-            link: '#' // TODO: Update link
+            link: 'https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9'
         },
         {
             id: 2,
