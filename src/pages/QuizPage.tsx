@@ -428,8 +428,7 @@ return (
 
                 {/* Item 2 */}
                 <div
-                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz2.locked ? 'bg-white/10 border border-primary/30 cursor-pointer hover:bg-white/20' : 'opacity-50 grayscale'}`}
-                    onClick={() => !schedule.quiz2.locked && window.open('#', '_blank')}
+                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz2.locked ? 'bg-white/10 border border-primary/30' : 'opacity-50 grayscale'}`}
                 >
                     <div className={`mb-1.5 ${!schedule.quiz2.locked ? 'text-primary' : 'text-gray-500'}`}>
                         {!schedule.quiz2.locked ? <PlayCircle size={18} /> : <Lock size={16} />}
@@ -444,8 +443,7 @@ return (
 
                 {/* Item 3 */}
                 <div
-                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz3.locked ? 'bg-white/10 border border-primary/30 cursor-pointer hover:bg-white/20' : 'opacity-50 grayscale'}`}
-                    onClick={() => !schedule.quiz3.locked && window.open('#', '_blank')}
+                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz3.locked ? 'bg-white/10 border border-primary/30' : 'opacity-50 grayscale'}`}
                 >
                     <div className={`mb-1.5 ${!schedule.quiz3.locked ? 'text-primary' : 'text-gray-500'}`}>
                         {!schedule.quiz3.locked ? <PlayCircle size={18} /> : <Lock size={16} />}
@@ -459,7 +457,5 @@ return (
                 </div>
             </div>
         </div>
-    </div>
-        </div >
-    );
+        );
 };
