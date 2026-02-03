@@ -372,6 +372,21 @@ const ResultStep: React.FC = () => {
                     </Button>
                 )}
 
+                {/* Extra Button: Replay Aula 1 (Para quem chegou depois) */}
+                {quiz?.id !== 'quiz-1' && (
+                    <Button
+                        variant="outline"
+                        fullWidth
+                        className="opacity-80 hover:opacity-100" // Um pouco mais discreto
+                        onClick={() => window.open('https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9', '_blank')}
+                    >
+                        <span className="flex items-center justify-center gap-3">
+                            <PlayCircle size={20} />
+                            REPLAY AULA 1
+                        </span>
+                    </Button>
+                )}
+
                 {/* Secondary Button: Official Group */}
                 <Button
                     variant="whatsapp"
