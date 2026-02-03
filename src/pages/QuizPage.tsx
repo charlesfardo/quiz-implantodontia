@@ -115,7 +115,7 @@ const IntroStep: React.FC = () => {
 };
 
 const MenuStep: React.FC = () => {
-    const { nextQuestion } = useQuiz();
+    const { nextQuestion, quiz } = useQuiz();
     const [lockedMessage, setLockedMessage] = React.useState<string | null>(null);
 
     return (
@@ -130,53 +130,55 @@ const MenuStep: React.FC = () => {
                 <p className="text-gray-400 text-sm">Complete o Passo 1 para desbloquear os próximos.</p>
             </div>
 
-            {/* Quiz 1 - Active */}
+            {/* Quiz 1 */}
             <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-gradient-to-r from-gray-800 to-gray-900 border border-primary/50 rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group"
-                onClick={nextQuestion}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-1' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-1' ? nextQuestion() : window.location.href = '/aula-1'}
             >
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-primary text-xs font-bold uppercase tracking-wider">Passo 01 • Disponível</span>
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-1' ? 'text-primary' : 'text-gray-400'}`}>Passo 01 • Disponível</span>
                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
                 </div>
                 <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Diagnóstico de Dependência</h4>
                 <p className="text-gray-400 text-xs mb-4">Descubra o que te impede de ver outras opções além do enxerto.</p>
                 <Button fullWidth variant="primary" className="py-3 text-sm">
-                    INICIAR AGORA
+                    {quiz?.id === 'quiz-1' ? 'INICIAR AGORA' : 'ACESSAR'}
                 </Button>
             </motion.div>
 
-            {/* Quiz 2 - Locked */}
+            {/* Quiz 2 */}
             <motion.div
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white/5 border border-white/5 rounded-xl p-5 opacity-60 relative overflow-hidden grayscale hover:grayscale-0 transition-all cursor-not-allowed"
-                onClick={() => setLockedMessage("🔒 Opa! Esse diagnóstico será liberado na Aula 2 (Quarta-feira, 04/02). Fique atento!")}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-2' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-2' ? nextQuestion() : window.location.href = '/aula-2'}
             >
-                <div className="absolute inset-0 bg-black/20 z-10" />
-                <div className="flex justify-between items-center mb-2 relative z-20">
-                    <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Passo 02 • Bloqueado</span>
-                    <Lock size={14} className="text-gray-400" />
+                <div className="flex justify-between items-center mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-2' ? 'text-primary' : 'text-gray-400'}`}>Passo 02 • Disponível (Teste)</span>
+                    <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
                 </div>
-                <h4 className="text-gray-300 font-bold text-lg mb-1 relative z-20">Mapa dos 3 Pilares</h4>
-                <p className="text-gray-300 text-xs relative z-20 font-medium bg-black/40 inline-block px-2 py-1 rounded">Liberado na Aula 2 (04/02)</p>
+                <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Mapa dos 3 Pilares</h4>
+                <p className="text-gray-400 text-xs mb-4">Avalie a estrutura óssea e gengival com precisão.</p>
+                <Button fullWidth variant="primary" className="py-3 text-sm">
+                    {quiz?.id === 'quiz-2' ? 'INICIAR AGORA' : 'ACESSAR'}
+                </Button>
             </motion.div>
 
-            {/* Quiz 3 - Locked */}
+            {/* Quiz 3 */}
             <motion.div
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white/5 border border-white/5 rounded-xl p-5 opacity-60 relative overflow-hidden grayscale hover:grayscale-0 transition-all cursor-not-allowed"
-                onClick={() => setLockedMessage("🔒 Calma doutor(a)! Esse aqui só libera na Aula 3 (Quinta-feira, 05/02).")}
+                className={`border rounded-xl p-5 cursor-pointer shadow-[0_0_15px_rgba(247,147,30,0.15)] group transition-all ${quiz?.id === 'quiz-3' ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-primary/50' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}
+                onClick={() => quiz?.id === 'quiz-3' ? nextQuestion() : window.location.href = '/aula-3'}
             >
-                <div className="absolute inset-0 bg-black/20 z-10" />
-                <div className="flex justify-between items-center mb-2 relative z-20">
-                    <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Passo 03 • Bloqueado</span>
-                    <Lock size={14} className="text-gray-400" />
+                <div className="flex justify-between items-center mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${quiz?.id === 'quiz-3' ? 'text-primary' : 'text-gray-400'}`}>Passo 03 • Disponível (Teste)</span>
+                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
                 </div>
-                <h4 className="text-gray-300 font-bold text-lg mb-1 relative z-20">Termômetro dos 5 Erros</h4>
-                <p className="text-gray-300 text-xs relative z-20 font-medium bg-black/40 inline-block px-2 py-1 rounded">Liberado na Aula 3 (05/02)</p>
+                <h4 className="text-white font-bold text-lg mb-1 group-hover:text-primary transition-colors">Termômetro dos 5 Erros</h4>
+                <p className="text-gray-400 text-xs mb-4">Identifique falhas críticas no planejamento.</p>
+                <Button fullWidth variant="primary" className="py-3 text-sm">
+                    {quiz?.id === 'quiz-3' ? 'INICIAR AGORA' : 'ACESSAR'}
+                </Button>
             </motion.div>
 
             {/* Locked Modal */}
