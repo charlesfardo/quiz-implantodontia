@@ -278,7 +278,7 @@ const ResultStep: React.FC = () => {
     // Logic for next class reminder
     const getNextClassInfo = () => {
         if (!quiz) return { title: 'PRÓXIMA AULA', link: '#' };
-        if (quiz.id === 'quiz-1') return { title: 'ATIVAR LEMBRETE AULA 02', link: 'https://www.youtube.com/watch?v=OA6ZG44N-6s' };
+        if (quiz.id === 'quiz-1') return { title: 'ATIVAR LEMBRETE AULA 02', link: 'https://www.youtube.com/playlist?list=PLD3Ug5RpISSxBVX0-nJZYTxFe-965qY7N' };
         if (quiz.id === 'quiz-2') return { title: 'ATIVAR LEMBRETE AULA 03', link: '#' };
         // Fallback for Quiz 3 or others
         return { title: 'ACESSAR COMUNIDADE', link: '#' };
