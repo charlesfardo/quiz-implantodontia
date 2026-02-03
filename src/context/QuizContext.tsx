@@ -59,8 +59,24 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const initQuiz = (id: QuizId) => {
         setQuizId(id);
-        // Se já tiver usuário, vai direto pro menu, senão intro
-        if (user.name && user.whatsapp) {
+
+        // Fail-safe: Tenta recuperar do localStorage se o state estiver vazio
+        // Isso previne que o usuário volte para o login ao trocar de rota
+        let effectiveUser = user;
+        if (!effectiveUser.name) {
+            const saved = localStorage.getItem('quiz_user');
+            if (saved) {
+                try {
+                    effectiveUser = JSON.parse(saved);
+                    setUser(effectiveUser); // Sincroniza o React State
+                } catch (e) {
+                    console.error('Erro ao ler usuario do storage', e);
+                }
+            }
+        }
+
+        // Se já tiver usuário (state ou recuperado), vai direto pro menu
+        if (effectiveUser.name && effectiveUser.whatsapp) {
             setStep('menu');
         } else {
             setStep('intro');
