@@ -375,61 +375,91 @@ const ResultStep: React.FC = () => {
     );
 };
 
-const FooterPlaylist: React.FC = () => {
-    // Playlist navigation items
-    const items = [
-        {
-            id: 1,
-            title: 'AULA 01',
-            status: 'available',
-            date: 'LIBERADA',
-            icon: <PlayCircle size={18} />,
-            link: 'https://youtu.be/t8jj7yqAshM?si=BqEjlo6DEVq139A9'
-        },
-        {
-            id: 2,
-            title: 'AULA 02',
-            status: 'locked',
-            date: '04/02',
-            icon: <Lock size={16} />,
-            link: null
-        },
-        {
-            id: 3,
-            title: 'AULA 03',
-            status: 'locked',
-            date: '05/02',
-            icon: <Lock size={16} />,
-            link: null
-        },
-    ];
+// Date Scheduling Logic
+const useSchedule = () => {
+    const [status, setStatus] = React.useState({
+        quiz2: { locked: true, date: '04/02' },
+        quiz3: { locked: true, date: '05/02' }
+    });
 
-    return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2">
-            <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl max-w-lg mx-auto">
-                <div className="flex justify-between items-center gap-2">
-                    {items.map((item) => (
-                        <div
-                            key={item.id}
-                            className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${item.status === 'available'
-                                ? 'bg-white/10 border border-primary/30 shadow-[0_0_10px_rgba(247,147,30,0.1)] cursor-pointer hover:bg-white/20'
-                                : 'opacity-50 cursor-not-allowed grayscale'
-                                }`}
-                            onClick={() => item.status === 'available' && window.open(item.link || '#', '_blank')}
-                        >
-                            <div className={`mb-1.5 ${item.status === 'available' ? 'text-primary animate-pulse' : 'text-gray-500'}`}>
-                                {item.icon}
-                            </div>
-                            <span className={`text-[10px] font-bold tracking-wider ${item.status === 'available' ? 'text-white' : 'text-gray-500'}`}>
-                                {item.title}
-                            </span>
-                            <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
-                                {item.date}
-                            </span>
-                        </div>
-                    ))}
+    useEffect(() => {
+        const checkTime = () => {
+            const now = new Date();
+            // UTC-3 targets
+            // Aula 2: 04/02/2026 21:00 BRT
+            const aula2Release = new Date('2026-02-04T21:00:00-03:00');
+            // Aula 3: 05/02/2026 21:30 BRT
+            const aula3Release = new Date('2026-02-05T21:30:00-03:00');
+
+            setStatus({
+                quiz2: { locked: now < aula2Release, date: '04/02' },
+                quiz3: { locked: now < aula3Release, date: '05/02' }
+            });
+        };
+
+        checkTime();
+        const interval = setInterval(checkTime, 60000); // Check every minute
+        return () => clearInterval(interval);
+    }, []);
+
+    return status;
+};
+
+const schedule = useSchedule();
+
+return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2">
+        <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl max-w-lg mx-auto">
+            <div className="flex justify-between items-center gap-2">
+                {/* Item 1 */}
+                <div
+                    className="flex flex-col items-center justify-center flex-1 p-2 rounded-xl bg-white/10 border border-primary/30 shadow-[0_0_10px_rgba(247,147,30,0.1)] transition-all"
+                >
+                    <div className="mb-1.5 text-primary animate-pulse">
+                        <PlayCircle size={18} />
+                    </div>
+                    <span className="text-[10px] font-bold tracking-wider text-white">
+                        AULA 01
+                    </span>
+                    <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
+                        LIBERADA
+                    </span>
+                </div>
+
+                {/* Item 2 */}
+                <div
+                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz2.locked ? 'bg-white/10 border border-primary/30 cursor-pointer hover:bg-white/20' : 'opacity-50 grayscale'}`}
+                    onClick={() => !schedule.quiz2.locked && window.open('#', '_blank')}
+                >
+                    <div className={`mb-1.5 ${!schedule.quiz2.locked ? 'text-primary' : 'text-gray-500'}`}>
+                        {!schedule.quiz2.locked ? <PlayCircle size={18} /> : <Lock size={16} />}
+                    </div>
+                    <span className={`text-[10px] font-bold tracking-wider ${!schedule.quiz2.locked ? 'text-white' : 'text-gray-500'}`}>
+                        AULA 02
+                    </span>
+                    <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
+                        {schedule.quiz2.date}
+                    </span>
+                </div>
+
+                {/* Item 3 */}
+                <div
+                    className={`flex flex-col items-center justify-center flex-1 p-2 rounded-xl transition-all ${!schedule.quiz3.locked ? 'bg-white/10 border border-primary/30 cursor-pointer hover:bg-white/20' : 'opacity-50 grayscale'}`}
+                    onClick={() => !schedule.quiz3.locked && window.open('#', '_blank')}
+                >
+                    <div className={`mb-1.5 ${!schedule.quiz3.locked ? 'text-primary' : 'text-gray-500'}`}>
+                        {!schedule.quiz3.locked ? <PlayCircle size={18} /> : <Lock size={16} />}
+                    </div>
+                    <span className={`text-[10px] font-bold tracking-wider ${!schedule.quiz3.locked ? 'text-white' : 'text-gray-500'}`}>
+                        AULA 03
+                    </span>
+                    <span className="text-[8px] uppercase font-medium text-gray-400 bg-black/40 px-1.5 py-0.5 rounded mt-1">
+                        {schedule.quiz3.date}
+                    </span>
                 </div>
             </div>
         </div>
+    </div>
+        </div >
     );
 };
